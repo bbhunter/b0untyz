@@ -1,0 +1,81 @@
+<html>
+<head>
+  <title>b0untyz</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      background-color: #1f1f1f;
+  }
+
+  h1 {
+      color: maroon;
+      margin-left: 40px;
+  }
+
+  table,tr,td {
+    border: 1px solid black;
+    padding: 5px;
+    color: white;
+    background-color: #1f1f1f;
+    font-size: 14px;
+  }
+
+  
+  td.rtype {
+    width: 150px;
+  }
+
+
+  td.name {
+    width: 50px;
+    max-width:100%;
+    white-space:nowrap;
+  }
+
+  td.addresses {
+    width: 90%;
+    max-width:100%;
+    white-space:wrap;
+  }
+
+  </style>
+</head>
+<body>
+  <div style="margin:100px;">
+    <nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+  <center><h3 style="color: white">b0untyz</h3></center>
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <!--<a href="/">b0untyz</a>-->
+      </li>
+    </ul>
+  </div>
+</nav>
+    <div class="jumbotron"  style="padding:40px;">
+      <h4>Subdomains By Name</h4>
+      <table>
+      <tbody>
+          <tr><td class="name">Domain</td><td class="rtype">Record Type</td><td class="addresses">Network IPs</td></tr>
+        {{#each show_subdomains_by_name}}
+          <tr><td class="name">{{this.record_name}}</td><td class="rtype">{{this.record_type}}</td><td class="addresses">{{this.record_addresses}}</td></tr>
+        {{/each}}
+      </tbody>
+      </table>
+      <h4>Subdomains By Network Address</h4>
+      <table>
+      <tbody>
+          <tr><td class="name">Network Address</td><td class="rtype">PTR Record</td><td class="addresses">Domains</td></tr>
+        {{#each show_subdomains_by_address}}
+          <tr><td class="name">{{this.record_network}}</td><td class="rtype">{{this.record_ptr}}</td><td class="addresses">{{this.record_sdomains}}</td></tr>
+        {{/each}}
+      </tbody>
+      </table>
+
+    </div>
+  </div>
+</body>
+</html>
