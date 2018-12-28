@@ -2,22 +2,41 @@ red='\033[0;31m'
 green='\033[0;32m'
 no_color='\033[0m'
 
+# colorize output?
+color_output=1
+
 function decho_red
 {
   string=${1}
-  echo -e  "${red}[$( date +'%H:%M:%S' )] ${string}${no_color}"
+  if [[ ${color_output} -eq 1 ]]
+  then
+    echo -e  "${red}[$( date +'%H:%M:%S' )] ${string}${no_color}"
+  else
+    echo "[$( date +'%H:%M:%S' )] ${string}"
+  fi
 }
 
 function decho_green
 {
   string=${1}
-  echo -e "${green}[$( date +'%H:%M:%S' )] ${string}${no_color}"
+  if [[ ${color_output} -eq 1 ]]
+  then
+    echo -e "${green}[$( date +'%H:%M:%S' )] ${string}${no_color}"
+  else
+    echo "[$( date +'%H:%M:%S' )] ${string}"
+  fi
 }
 
 function decho_logo
 {
   string=${1}
-  echo -e "${green}${string}${no_color}"
+
+  if [[ ${color_output} -eq 1 ]]
+  then
+    echo -e "${green}${string}${no_color}"
+  else
+    echo "${string}"
+  fi
 }
 
 
@@ -25,6 +44,13 @@ function decho
 {
   string=$1
   echo "[$( date +'%H:%M:%S' )] ${string}"
+}
+
+function help_usage
+{
+  echo -e "usage: ${0} <domain>\n
+          -c 1 : color output - enabled by default, set to 0 to disable
+          "
 }
 
 function prepare_workspace

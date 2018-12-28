@@ -6,9 +6,26 @@ domain="${1}"
 
 if [[ -z ${domain} ]]
 then
-  decho_red "[error] usage: ${0} <domain name>"
+  #decho_red "[error] usage: ${0} <domain name>"
+  help_usage
   exit 1
 fi
+
+while getopts "c:" opt; do
+  case $opt in
+    c)
+      color_output=$OPTARG >&2
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 decho "[preparing workspace]"
 prepare_workspace
