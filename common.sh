@@ -3,7 +3,7 @@ green='\033[0;32m'
 no_color='\033[0m'
 
 # colorize output?
-color_output=1
+color_output=0
 
 function decho_red
 {
@@ -49,7 +49,7 @@ function decho
 function help_usage
 {
   echo -e "usage: ${0} <domain>\n
-          -c 1 : color output - enabled by default, set to 0 to disable
+          -c 1 : color output - disabled by default, set to 1 to enable
           "
 }
 
