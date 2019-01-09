@@ -14,6 +14,10 @@ A bug bounty helper, meant to be fully automated process, work in progress.
 ./run <domain name>
 ```
 
+## todo list
+
+- add tools for recon
+
 ## contribution
 
 PRs and ideas are always welcome!
