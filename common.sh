@@ -61,10 +61,15 @@ function prepare_workspace
 function process_subdomains
 {
   domain=${1}
+  bad_domains="^-"
   cat workspace/${domain}/gobuster/result.txt.tmp | sed -e "s/Found: //g" >  workspace/${domain}/gobuster/result.txt
-  cat workspace/${domain}/amass/result.txt workspace/${domain}/amass/result.txt workspace/${domain}/gobuster/result.txt | sort -u > workspace/${domain}/subdomains.list
+  cat workspace/${domain}/amass/result.txt workspace/${domain}/amass/result.txt workspace/${domain}/gobuster/result.txt | sort -u | egrep -v "${bad_domains}" > workspace/${domain}/subdomains.list
   for line in $( cat workspace/${domain}/subdomains.list )
   do
+    if dig "${line}" | egrep -iq "ANSWER: 0" 
+    then
+        continue
+    fi
     echo -e "${green}[subdomain]:${no_color} ${line}"
   done
 
@@ -73,6 +78,10 @@ function process_subdomains
   > workspace/${domain}/subdomains.by.ip.process
   for line in $( cat workspace/${domain}/subdomains.list )
   do
+    if dig "${line}" | egrep -iq "ANSWER: 0" 
+    then
+        continue
+    fi
     subdomain_ips=""
     for sdomain in $( dig A ${line} +short )
     do
@@ -92,7 +101,10 @@ function process_subdomains
       ptr="none"
     fi
     echo -e "ip address ${green}${line}${no_color} (ptr record: ${ptr}) ${domains}"
+    echo -e "${green}[whois info]${no_color}"
+    whois ${line} | egrep -i "inetnum|netname|country|org-name|orgname|netrange" | uniq
     echo  "${line},${ptr},${domains}" >> workspace/${domain}/subdomains.by.ip.process
+
   done
 
 }
